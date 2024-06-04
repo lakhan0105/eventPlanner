@@ -12,3 +12,7 @@ body {
   /* font-family: "Poppins", sans-serif; */
   font-family: "Roboto", sans-serif;
 }
+
+.page-center {
+  padding-top: 60px;
+}

@@ -6,6 +6,9 @@ import Sidebar from "./Navbar/Sidebar";
 import NavLinks from "./Navbar/NavLinks";
 import SideNavLinks from "./Navbar/SideNavLinks";
 import Services from "./Services";
+import LoginBtn from "./LoginBtn";
+import RegisterBtn from "./RegisterBtn";
+import FormInput from "./FormInput";
 
 export {
   HeroComponent,
@@ -16,4 +19,7 @@ export {
   NavLinks,
   SideNavLinks,
   Services,
+  LoginBtn,
+  RegisterBtn,
+  FormInput,
 };

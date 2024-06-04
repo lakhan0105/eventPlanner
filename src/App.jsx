@@ -5,14 +5,29 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { Home, RootLayout } from "./Pages/index";
+import {
+  Home,
+  Lightings,
+  Login,
+  Register,
+  RootLayout,
+  SoundSystems,
+  TentHouse,
+} from "./Pages/index";
 
 // router
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<Home />} />
-    </Route>
+    <>
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Home />} />
+        <Route path="sound-systems" element={<SoundSystems />} />
+        <Route path="tent-house" element={<TentHouse />} />
+        <Route path="lightings" element={<Lightings />} />
+      </Route>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </>
   )
 );
 

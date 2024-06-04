@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { BigNavBar, Sidebar, SmallNavBar } from "../Components/index";
 
 function RootLayout() {
@@ -10,9 +10,15 @@ function RootLayout() {
     setIsSidebarOpen((prev) => !prev);
   }
 
+  // change header color based on page
+  const location = useLocation();
+  let navBgColor = location.pathname === "/" ? "bg-transparent" : "bg-black";
+
   return (
     <>
-      <header className={`fixed h-[50px] top-0 left-0 right-0 z-40 text-white`}>
+      <header
+        className={`fixed h-[50px] top-0 left-0 right-0 z-40 text-white ${navBgColor}`}
+      >
         <SmallNavBar toggleSidebar={toggleSidebar} />
         <BigNavBar />
       </header>
