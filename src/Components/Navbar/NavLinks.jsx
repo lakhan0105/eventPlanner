@@ -7,8 +7,7 @@ function NavLinks() {
     <Wrapper className="flex">
       <NavLink to={"/"}>Home</NavLink>
       <NavLink to={"/"}>About</NavLink>
-      <NavLink to={"/"}>Sound-System</NavLink>
-      <NavLink to={"/"}>Lights</NavLink>
+      <NavLink to={"/all-products"}>All Products</NavLink>
     </Wrapper>
   );
 }

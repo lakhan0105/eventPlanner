@@ -9,6 +9,7 @@ import Services from "./Services";
 import LoginBtn from "./LoginBtn";
 import RegisterBtn from "./RegisterBtn";
 import FormInput from "./FormInput";
+import CardsContainer from "./CardsContainer";
 
 export {
   HeroComponent,
@@ -22,4 +23,5 @@ export {
   LoginBtn,
   RegisterBtn,
   FormInput,
+  CardsContainer,
 };

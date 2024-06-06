@@ -1,3 +1,4 @@
+import AllProducts from "./AllProducts";
 import Home from "./Home";
 import Lightings from "./Lightings";
 import Login from "./Login";
@@ -14,4 +15,5 @@ export {
   Lightings,
   Login,
   Register,
+  AllProducts,
 };

@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import {
+  AllProducts,
   Home,
   Lightings,
   Login,
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
         <Route path="sound-systems" element={<SoundSystems />} />
         <Route path="tent-house" element={<TentHouse />} />
         <Route path="lightings" element={<Lightings />} />
+        <Route path="all-products" element={<AllProducts />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
