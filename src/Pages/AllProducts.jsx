@@ -89,7 +89,6 @@ function AllProducts() {
       <div className="w-full">
         <h2>All Products</h2>
         <CardsContainer data={soundSystems} title={"sound systems"} />
-        <CardsContainer data={lights} title={"lightings"} />
       </div>
     </div>
   );

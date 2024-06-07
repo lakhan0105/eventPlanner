@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "./Logo";
 import { IoMdClose } from "react-icons/io";
 import SideNavLinks from "./SideNavLinks";
+import { LoginBtn, RegisterBtn } from "../index";
 
 function Sidebar({ isSidebarOpen, toggleSidebar }) {
   return (
@@ -17,8 +18,10 @@ function Sidebar({ isSidebarOpen, toggleSidebar }) {
           <IoMdClose />
         </button>
       </header>
-
       <SideNavLinks />
+
+      <LoginBtn />
+      <RegisterBtn />
     </aside>
   );
 }
