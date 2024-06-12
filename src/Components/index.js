@@ -10,6 +10,8 @@ import LoginBtn from "./LoginBtn";
 import RegisterBtn from "./RegisterBtn";
 import FormInput from "./FormInput";
 import CardsContainer from "./CardsContainer";
+import LogoutBtn from "./LogoutBtn";
+import BlogImg from "./BlogImg";
 
 export {
   HeroComponent,
@@ -24,4 +26,6 @@ export {
   RegisterBtn,
   FormInput,
   CardsContainer,
+  LogoutBtn,
+  BlogImg,
 };

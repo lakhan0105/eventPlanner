@@ -6,6 +6,7 @@ import Register from "./Register";
 import RootLayout from "./RootLayout";
 import SoundSystems from "./SoundSystems";
 import TentHouse from "./TentHouse";
+import SingleProduct from "./SingleProduct";
 
 export {
   RootLayout,
@@ -16,4 +17,5 @@ export {
   Login,
   Register,
   AllProducts,
+  SingleProduct,
 };

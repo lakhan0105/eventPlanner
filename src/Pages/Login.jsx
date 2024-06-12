@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormInput from "../Components/FormInput";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/authSlice";
 
 function Login() {
   const initialVal = {
@@ -9,6 +11,16 @@ function Login() {
   };
 
   const [data, setData] = useState(initialVal);
+  const dispatch = useDispatch();
+  const { currUser } = useSelector((state) => state.authReducer);
+  const navigate = useNavigate();
+
+  // navigate to home if currUser is already present
+  useEffect(() => {
+    if (currUser) {
+      navigate("/");
+    }
+  }, [currUser]);
 
   // handleChange
   function handleChange(e) {
@@ -22,7 +34,7 @@ function Login() {
   // handleSubmit
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(data);
+    dispatch(loginUser(data));
   }
 
   return (

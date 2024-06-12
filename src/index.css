@@ -11,8 +11,11 @@
 body {
   /* font-family: "Poppins", sans-serif; */
   font-family: "Roboto", sans-serif;
+  background-color: #f5f5f5;
 }
 
 .page-center {
   padding-top: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
 }

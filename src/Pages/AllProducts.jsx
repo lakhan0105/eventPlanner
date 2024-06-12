@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardsContainer from "../Components/CardsContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from "../features/products/productsSlice";
 
 const soundSystems = [
   {
@@ -82,13 +84,27 @@ const lights = [
 ];
 
 function AllProducts() {
+  const dispatch = useDispatch();
+  const { allProducts } = useSelector((state) => state?.productsReducer);
+  const [products, setProducts] = useState(null);
+
+  // fetch all the products on page load
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, []);
+
+  // set the products state to the allProducts which is fetched from the server
+  useEffect(() => {
+    setProducts(allProducts);
+  }, [dispatch, allProducts]);
+
   return (
-    <div className="page-center bg-[#f5f5f5] p-5 w-full flex gap-10 ">
+    <div className="page-center p-5 w-full flex gap-10 ">
+      {/* filter section */}
       <div className="border w-[250px] hidden sm:block">filter section</div>
 
       <div className="w-full">
-        <h2>All Products</h2>
-        <CardsContainer data={soundSystems} title={"sound systems"} />
+        <CardsContainer data={products} title={"All products"} />
       </div>
     </div>
   );

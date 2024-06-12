@@ -13,6 +13,7 @@ import {
   Login,
   Register,
   RootLayout,
+  SingleProduct,
   SoundSystems,
   TentHouse,
 } from "./Pages/index";
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
         <Route path="tent-house" element={<TentHouse />} />
         <Route path="lightings" element={<Lightings />} />
         <Route path="all-products" element={<AllProducts />} />
+        <Route path="/single-product/:id" element={<SingleProduct />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

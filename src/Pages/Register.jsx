@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormInput from "../Components/FormInput";
-import { NavLink } from "react-router-dom";
+import { NavLink, redirect, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../features/auth/authSlice";
+import { ID } from "appwrite";
 
 function Register() {
   // initialVal
@@ -8,15 +11,19 @@ function Register() {
     firstName: "",
     email: "",
     password: "",
+    userId: "",
   };
 
   const [data, setData] = useState(initialVal);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { currUser } = useSelector((state) => state.authReducer);
 
   // handleChange;
   function handleChange(e) {
     const key = e.target.name;
     const val = e.target.value;
-
     setData((prev) => {
       return { ...prev, [key]: val };
     });
@@ -25,8 +32,15 @@ function Register() {
   // handleSubmit
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("submit the data");
+    dispatch(registerUser({ ...data, userId: ID.unique() }));
   }
+
+  // if currUser is present, redirect to home page
+  useEffect(() => {
+    if (currUser) {
+      navigate("/");
+    }
+  }, [currUser]);
 
   return (
     <section className="w-full h-screen bg-[#f5f5f5] flex flex-col items-center">
