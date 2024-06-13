@@ -9,7 +9,7 @@ function BlogImg({ imgId }) {
     setImage(resp?.href);
   }, []);
 
-  console.log(image);
+  //   console.log(image);
   return <img src={image} alt={""} className="w-full h-full object-cover" />;
 }
 

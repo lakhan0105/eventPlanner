@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CardsContainer from "../Components/CardsContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../features/products/productsSlice";
+import {
+  genFilteredProducts,
+  getAllProducts,
+} from "../features/products/productsSlice";
+import FilterComponent from "../Components/FilterComponent";
 
 const soundSystems = [
   {
@@ -85,8 +89,10 @@ const lights = [
 
 function AllProducts() {
   const dispatch = useDispatch();
-  const { allProducts } = useSelector((state) => state?.productsReducer);
-  const [products, setProducts] = useState(null);
+  const { allProducts, filteredProducts } = useSelector(
+    (state) => state?.productsReducer
+  );
+  const [products, setProducts] = useState(allProducts);
 
   // fetch all the products on page load
   useEffect(() => {
@@ -98,10 +104,25 @@ function AllProducts() {
     setProducts(allProducts);
   }, [dispatch, allProducts]);
 
+  // set the filtredProducts when the filter btn is pressed
+  useEffect(() => {
+    setProducts(filteredProducts);
+  }, [filteredProducts]);
+
+  // handleFilter
+  function handleFilter(e) {
+    const btnName = e.target.name;
+    if (btnName === "all") {
+      setProducts(allProducts);
+    } else {
+      dispatch(genFilteredProducts(btnName));
+    }
+  }
+
   return (
     <div className="page-center p-5 w-full flex gap-10 ">
       {/* filter section */}
-      <div className="border w-[250px] hidden sm:block">filter section</div>
+      <FilterComponent allProducts={allProducts} handleFilter={handleFilter} />
 
       <div className="w-full">
         <CardsContainer data={products} title={"All products"} />

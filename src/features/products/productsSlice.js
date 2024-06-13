@@ -13,6 +13,8 @@ const storage = new Storage(client);
 const initialState = {
   isLoading: false,
   allProducts: null,
+  categoriesArray: null,
+  filteredProducts: null,
 };
 
 // getAllProducts
@@ -46,7 +48,16 @@ export const getPreview = (imgId) => {
 export const productsSlice = createSlice({
   name: "productSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    genFilteredProducts: (state, { payload }) => {
+      state.filteredProducts = state?.allProducts.filter((product) => {
+        if (product.category.includes(payload)) {
+          state.filteredProducts = product;
+          return product;
+        }
+      });
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllProducts.pending, (state) => {
@@ -55,6 +66,18 @@ export const productsSlice = createSlice({
       .addCase(getAllProducts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.allProducts = payload.documents;
+
+        state.categoriesArray = state.allProducts?.reduce(
+          (acc, curr) => {
+            curr.category.forEach((categoryName) => {
+              if (!acc.includes(categoryName)) {
+                acc.push(categoryName);
+              }
+            });
+            return acc;
+          },
+          ["all"]
+        );
       })
       .addCase(getAllProducts.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -65,3 +88,4 @@ export const productsSlice = createSlice({
 
 // export
 export default productsSlice.reducer;
+export const { genFilteredProducts } = productsSlice.actions;

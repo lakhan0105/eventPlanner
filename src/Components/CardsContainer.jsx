@@ -5,7 +5,7 @@ import BlogImg from "./BlogImg";
 
 function CardsContainer({ data, title }) {
   return (
-    <div className="w-full mb-7 pb-5 border-grey-900 border-b">
+    <div className="w-full mb-7 pb-5 border-grey-900">
       <h2 className="mb-3 font-bold text-2xl capitalize">{title}</h2>
 
       <div className="grid grid-col-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
