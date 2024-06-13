@@ -4,6 +4,10 @@ import { NavLink } from "react-router-dom";
 import BlogImg from "./BlogImg";
 
 function CardsContainer({ data, title }) {
+  if (data?.length === 0) {
+    return <h2 className="font-bold mt-10">No product matched</h2>;
+  }
+
   return (
     <div className="w-full mb-7 pb-5 border-grey-900">
       <h2 className="mb-3 font-bold text-2xl capitalize">{title}</h2>
@@ -20,8 +24,13 @@ function CardsContainer({ data, title }) {
                 </div>
 
                 <div className="p-2">
-                  <div className="font-semibold mb-1">{name}</div>
-                  <div className="text-gray-700">{desc}</div>
+                  <div className="font-semibold mb-1 capitalize">{name}</div>
+                  <div className="text-gray-700 mb-2 text-sm">{desc}</div>
+                  <div>
+                    <p className="inline bg-[#a32a2a] text-white text-sm p-1 rounded">
+                      <span>₹{price}</span> per day
+                    </p>
+                  </div>
                 </div>
               </article>
             </NavLink>

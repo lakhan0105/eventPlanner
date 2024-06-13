@@ -15,6 +15,8 @@ const initialState = {
   allProducts: null,
   categoriesArray: null,
   filteredProducts: null,
+  filteredProductsByPrice: null,
+  maxPrice: null,
 };
 
 // getAllProducts
@@ -57,6 +59,13 @@ export const productsSlice = createSlice({
         }
       });
     },
+    genFilteredProductsByPrice: (state, { payload }) => {
+      state.filteredProductsByPrice = state?.allProducts.filter((product) => {
+        if (product.price <= payload) {
+          return product;
+        }
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,6 +76,7 @@ export const productsSlice = createSlice({
         state.isLoading = false;
         state.allProducts = payload.documents;
 
+        // CREATE A CATEGORIES ARRAY
         state.categoriesArray = state.allProducts?.reduce(
           (acc, curr) => {
             curr.category.forEach((categoryName) => {
@@ -78,6 +88,14 @@ export const productsSlice = createSlice({
           },
           ["all"]
         );
+
+        // CREATE MAX PRICE
+        state.maxPrice = state?.allProducts?.reduce((acc, curr) => {
+          if (curr.price > acc) {
+            acc = curr.price;
+          }
+          return acc;
+        }, 0);
       })
       .addCase(getAllProducts.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -88,4 +106,5 @@ export const productsSlice = createSlice({
 
 // export
 export default productsSlice.reducer;
-export const { genFilteredProducts } = productsSlice.actions;
+export const { genFilteredProducts, genFilteredProductsByPrice } =
+  productsSlice.actions;
