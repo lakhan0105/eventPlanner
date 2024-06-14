@@ -7,9 +7,8 @@ function BlogImg({ imgId }) {
   useEffect(() => {
     const resp = getPreview(imgId);
     setImage(resp?.href);
-  }, []);
+  }, [imgId]);
 
-  //   console.log(image);
   return <img src={image} alt={""} className="w-full h-full object-cover" />;
 }
 

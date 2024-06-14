@@ -4,6 +4,7 @@ const constants = {
   appwriteDatabaseId: import.meta.env.VITE_DATABASE_ID,
   productsCollectionId: import.meta.env.VITE_PRODUCTS_COLLECTION_ID,
   imgBucketId: import.meta.env.VITE_IMG_BUCKET_ID,
+  bookingsCollectionId: import.meta.env.VITE_BOOKINGS_COLLECTION_ID,
 };
 
 export default constants;

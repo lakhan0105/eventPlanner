@@ -13,6 +13,8 @@ import CardsContainer from "./CardsContainer";
 import LogoutBtn from "./LogoutBtn";
 import BlogImg from "./BlogImg";
 import FilterComponent from "./FilterComponent";
+import FilterSection from "./FilterSection";
+import FormSelect from "./FormSelect";
 
 export {
   HeroComponent,
@@ -30,4 +32,6 @@ export {
   LogoutBtn,
   BlogImg,
   FilterComponent,
+  FilterSection,
+  FormSelect,
 };

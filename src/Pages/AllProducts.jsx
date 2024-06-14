@@ -6,7 +6,7 @@ import {
   genFilteredProductsByPrice,
   getAllProducts,
 } from "../features/products/productsSlice";
-import FilterComponent from "../Components/FilterComponent";
+import { FilterComponent, FilterSection } from "../Components/index";
 
 function AllProducts() {
   const dispatch = useDispatch();
@@ -26,26 +26,30 @@ function AllProducts() {
     setProducts(allProducts);
   }, [dispatch, allProducts]);
 
-  // set the filtredProducts and the filteredProductsByPrice
+  // sync the filtredProducts
   useEffect(() => {
     setProducts(filteredProducts);
-    setProducts(filteredProductsByPrice);
-  }, [filteredProducts, filteredProductsByPrice]);
+  }, [filteredProducts]);
 
   // useEffect to set the value of rangeVal on page load
   useEffect(() => {
     setRangeVal(maxPrice || "");
   }, [maxPrice]);
 
+  // sync the filteredProductsByPrice
+  useEffect(() => {
+    setProducts(filteredProductsByPrice);
+  }, [filteredProductsByPrice]);
+
   // handleCategoryFilter
   function handleCategoryFilter(e) {
     const btnName = e.target.name;
     if (btnName === "all") {
       setProducts(allProducts);
-      setRangeVal(maxPrice); // also set the range val to default
     } else {
       dispatch(genFilteredProducts(btnName));
     }
+    setRangeVal(maxPrice); // also set the range val to default
   }
 
   // handleRangeFilter
@@ -58,17 +62,17 @@ function AllProducts() {
   return (
     <div className="page-center p-5 w-full flex gap-10 ">
       {/* FILTER SECTION */}
-      <FilterComponent
-        allProducts={allProducts}
-        handleCategoryFilter={handleCategoryFilter}
-        rangeVal={rangeVal}
-        handleRangeFilter={handleRangeFilter}
-      />
+      <FilterSection>
+        <FilterComponent
+          allProducts={allProducts}
+          handleCategoryFilter={handleCategoryFilter}
+          rangeVal={rangeVal}
+          handleRangeFilter={handleRangeFilter}
+        />
+      </FilterSection>
 
       {/* CARDS CONTAINER (PRODUCTS) */}
-      <div className="w-full">
-        <CardsContainer data={products} title={"All products"} />
-      </div>
+      <CardsContainer data={products} title={"All products"} />
     </div>
   );
 }

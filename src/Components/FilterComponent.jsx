@@ -11,7 +11,7 @@ function FilterComponent({
   );
 
   return (
-    <div className="border-r mt-10 w-[250px] hidden sm:block">
+    <div className="">
       {/* CATEGORY BUTTONS  */}
       <p className="font-bold text-lg capitalize mb-2">categories</p>
       {categoriesArray?.map((category) => {
