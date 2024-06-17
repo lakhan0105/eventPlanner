@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { BlogImg, FilterSection, FormSelect } from "../Components/index";
-import { useSelector } from "react-redux";
+import { BlogImg, FormSelect, SelectDate } from "../Components/index";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { getAllProducts } from "../features/products/productsSlice";
+import { checkAvl } from "../features/bookings/bookingsSlice";
 
 function SingleProduct() {
-  const { allProducts } = useSelector((state) => state.productsReducer);
+  const { allProducts } = useSelector((state) => state?.productsReducer);
+  const { isAvailable, isLoading } = useSelector(
+    (state) => state?.bookingsReducer
+  );
+
   const param = useParams();
+  const dispatch = useDispatch();
+
   const [singleProduct, setSingleProduct] = useState(null);
-  const [selectedQuantity, setSelectedQuantity] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
 
   // useEffect to load the single product details
   useEffect(() => {
+    // on page refresh, allProducts was setting back to null, so i wrote the below code
+    if (!allProducts) {
+      dispatch(getAllProducts());
+    }
+
+    // find the single product in allPproducts array
     const findProduct = allProducts?.find((product) => {
-      if (product.id === param.id) {
+      if (product?.id === param.id) {
         return product;
       }
     });
@@ -20,12 +36,49 @@ function SingleProduct() {
     if (findProduct) {
       setSingleProduct(findProduct);
     }
-  }, []);
+  }, [allProducts, singleProduct]);
 
   // handleFormSelect
   function handleFormSelect(e) {
-    console.log(e.target.value);
     setSelectedQuantity(Number(e.target.value));
+  }
+
+  // handleCheckAvl
+  function handleCheckAvl(e) {
+    e.preventDefault();
+
+    // check for empty inputs
+    if (
+      selectedQuantity < 1 ||
+      selectedStartDate === null ||
+      selectedEndDate === null
+    ) {
+      alert("please fill all the details ");
+    }
+
+    const obj = {
+      productId: singleProduct?.id,
+      selectedQuantity,
+      selectedStartDate,
+      selectedEndDate,
+    };
+
+    dispatch(checkAvl(obj));
+  }
+
+  // handleAddToCart
+  function handleAddToCart(e) {
+    const cartItem = {
+      productId: singleProduct?.id,
+      productName: singleProduct?.name,
+      productImg: singleProduct?.img,
+      productPrice: singleProduct?.price,
+      selectedQuantity,
+      selectedStartDate,
+      selectedEndDate,
+    };
+
+    console.log(cartItem);
   }
 
   return (
@@ -42,7 +95,7 @@ function SingleProduct() {
         </div>
 
         {/* PRODUCT INFO */}
-        <div>
+        <div className="flex flex-col items-start">
           <h3 className="text-2xl capitalize">{singleProduct?.name}</h3>
           <p>
             ₹<span className="font-bold text-2xl">{singleProduct?.price}</span>
@@ -50,10 +103,47 @@ function SingleProduct() {
           </p>
           <p className="text-sm mt-2 max-w-[90%]">{singleProduct?.desc}</p>
 
-          <FormSelect
-            productId={singleProduct?.id}
-            handleFormSelect={handleFormSelect}
-          />
+          <form
+            className="border inline-block p-2 rounded mt-5"
+            onSubmit={handleCheckAvl}
+          >
+            {/* select quantity */}
+            <FormSelect
+              productId={singleProduct?.id}
+              handleFormSelect={handleFormSelect}
+              defaultVal={selectedQuantity}
+            />
+
+            {/* fill the dates  */}
+            <div className="text-sm flex gap-5">
+              <SelectDate
+                label={"start date"}
+                setState={setSelectedStartDate}
+              />
+              <SelectDate label={"end date"} setState={setSelectedEndDate} />
+            </div>
+
+            {/* check avl btn */}
+            <button
+              type="submit"
+              className="mt-5 border rounded text-sm capitalize p-2 bg-white"
+            >
+              check availability
+            </button>
+          </form>
+
+          {/* show the cart btn if the product is available and not null else show msg that its not available  */}
+          {isAvailable !== null &&
+            (isAvailable ? (
+              <button
+                className="border mt-5 rounded px-2"
+                onClick={handleAddToCart}
+              >
+                Add to cart
+              </button>
+            ) : (
+              "product is not available for the selected date :("
+            ))}
         </div>
       </div>
 

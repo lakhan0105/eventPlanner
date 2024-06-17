@@ -15,6 +15,7 @@ import BlogImg from "./BlogImg";
 import FilterComponent from "./FilterComponent";
 import FilterSection from "./FilterSection";
 import FormSelect from "./FormSelect";
+import SelectDate from "./SelectDate";
 
 export {
   HeroComponent,
@@ -34,4 +35,5 @@ export {
   FilterComponent,
   FilterSection,
   FormSelect,
+  SelectDate,
 };

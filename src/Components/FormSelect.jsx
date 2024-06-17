@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-function FormSelect({ productId, handleFormSelect }) {
+function FormSelect({ productId, handleFormSelect, defaultValue }) {
   const { allProducts } = useSelector((state) => state.productsReducer);
 
   // Find the product
-  const product = allProducts.find((product) => {
-    if (product.id === productId) {
+  const product = allProducts?.find((product) => {
+    if (product?.id === productId) {
       return product;
     }
   });
@@ -20,18 +20,23 @@ function FormSelect({ productId, handleFormSelect }) {
   }
 
   return (
-    <div className="mt-5">
+    <div className="mb-5">
       <label htmlFor="select" className="mr-2 text-sm">
-        Quantity
+        Quantity:
       </label>
 
       <select
         className="text-sm border rounded"
         id="select"
         onChange={handleFormSelect}
+        defaultValue={defaultValue}
       >
         {quantityArray?.map((value) => {
-          return <option value={value}>{value}</option>;
+          return (
+            <option value={value} key={value}>
+              {value}
+            </option>
+          );
         })}
       </select>
     </div>
