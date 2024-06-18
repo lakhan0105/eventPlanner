@@ -8,6 +8,7 @@ import {
 
 import {
   AllProducts,
+  Cart,
   Home,
   Lightings,
   Login,
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
         <Route path="lightings" element={<Lightings />} />
         <Route path="all-products" element={<AllProducts />} />
         <Route path="/single-product/:id" element={<SingleProduct />} />
+        <Route path="/cart" element={<Cart />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

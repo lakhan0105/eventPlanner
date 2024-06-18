@@ -7,6 +7,7 @@ import RootLayout from "./RootLayout";
 import SoundSystems from "./SoundSystems";
 import TentHouse from "./TentHouse";
 import SingleProduct from "./SingleProduct";
+import Cart from "./Cart";
 
 export {
   RootLayout,
@@ -18,4 +19,5 @@ export {
   Register,
   AllProducts,
   SingleProduct,
+  Cart,
 };

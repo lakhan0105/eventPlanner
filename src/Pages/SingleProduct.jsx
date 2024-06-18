@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllProducts } from "../features/products/productsSlice";
 import { checkAvl } from "../features/bookings/bookingsSlice";
+import { addToCart } from "../features/cart/cartSlice";
+
+// TODO: when the page loads set the isAvailable to false for each and every page.
 
 function SingleProduct() {
   const { allProducts } = useSelector((state) => state?.productsReducer);
@@ -54,6 +57,7 @@ function SingleProduct() {
       selectedEndDate === null
     ) {
       alert("please fill all the details ");
+      return;
     }
 
     const obj = {
@@ -78,7 +82,7 @@ function SingleProduct() {
       selectedEndDate,
     };
 
-    console.log(cartItem);
+    dispatch(addToCart(cartItem));
   }
 
   return (
