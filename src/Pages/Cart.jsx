@@ -5,7 +5,9 @@ import { removeFrmCart } from "../features/cart/cartSlice";
 import { Link } from "react-router-dom";
 
 function Cart() {
-  const { cartItems } = useSelector((state) => state.cartReducer);
+  const { cartItems, cartTotal, orderTotal, tax, shipping } = useSelector(
+    (state) => state.cartReducer
+  );
   const dispatch = useDispatch();
 
   // handleRemoveFrmCart
@@ -27,7 +29,7 @@ function Cart() {
   }
 
   return (
-    <div className="page-center flex justify-center w-full gap-10 relative">
+    <div className="page-center flex justify-center items-start w-full gap-10 relative">
       {/* items container */}
       <div className="w-full max-w-[600px]">
         <h3 className="font-bold text-2xl text-left mb-4">Cart Items </h3>
@@ -83,8 +85,36 @@ function Cart() {
       </div>
 
       {/* other information container */}
-      <div className="border rounded p-2 text-md w-[300px] mt-12 ">
-        <p>Total Items: {cartItems.length}</p>
+      <div className="other-info-container">
+        <div className="border rounded-md p-4 text-sm w-[250px] mt-12 bg-white shadow-sm">
+          <h2 className="font-bold mb-1 text-xl">Cart Info</h2>
+
+          <hr className="mb-3" />
+          <p className="order-text-left">
+            Total Items <span className="text-right">{cartItems.length}</span>
+          </p>
+          <p className="order-text-left">
+            Cart total <span className="text-right">₹{cartTotal}</span>
+          </p>
+          <p className="order-text-left">
+            Tax <span className="text-right">₹{tax}</span>
+          </p>
+          <p className="order-text-left">
+            Shipping <span className="text-right">₹{shipping}</span>
+          </p>
+
+          <hr className="mt-2" />
+
+          <p className="order-text-left mt-3 font-bold">
+            Order Total <span className="">₹{orderTotal}</span>
+          </p>
+        </div>
+
+        <div className="mt-3 w-full text">
+          <button className="border w-[100%] rounded-md py-1">
+            confirm and proceed
+          </button>
+        </div>
       </div>
     </div>
   );

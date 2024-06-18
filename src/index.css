@@ -19,3 +19,10 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.order-text-left {
+  /* mt-1 flex justify-between */
+  /* margin-top: 0.25rem; */
+  display: flex;
+  justify-content: space-between;
+}

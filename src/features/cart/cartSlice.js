@@ -6,6 +6,9 @@ const initialState = {
   isLoading: false,
   cartItems: getLS("cartItems") || [],
   cartTotal: 0,
+  tax: 0,
+  orderTotal: 0,
+  shipping: 500,
 };
 
 // cartSlice
@@ -44,12 +47,16 @@ const cartSlice = createSlice({
         state.cartTotal +=
           findProduct.productPrice *
           (payload.selectedQuantity - findProduct.selectedQuantity);
+        state.tax = 0.1 * state.cartTotal;
+        state.orderTotal = state.orderTotal + state.tax + state.shipping;
         addToLS("cartItems", state.cartItems);
       }
       // otherwise just add the item
       else {
         state.cartItems.push(payload);
         state.cartTotal += payload.selectedQuantity * payload.productPrice;
+        state.tax = 0.2 * state.cartTotal;
+        state.orderTotal = state.orderTotal + state.tax + state.shipping;
         addToLS("cartItems", state.cartItems);
       }
     },
@@ -73,6 +80,7 @@ const cartSlice = createSlice({
         state.cartTotal -=
           findProduct.productPrice * findProduct.selectedQuantity;
         addToLS("cartItems", editedCartItems);
+        state.orderTotal += state.tax * state.cartTotal;
       }
     },
     clearCart: (state) => {
