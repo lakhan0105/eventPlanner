@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { BlogImg } from "../Components";
 import { removeFrmCart } from "../features/cart/cartSlice";
 import { Link } from "react-router-dom";
+import { createBooking } from "../features/bookings/bookingsSlice";
 
 function Cart() {
+  const { currUser } = useSelector((state) => state.authReducer);
   const { cartItems, cartTotal, orderTotal, tax, shipping } = useSelector(
     (state) => state.cartReducer
   );
@@ -13,6 +15,40 @@ function Cart() {
   // handleRemoveFrmCart
   function handleRemoveFrmCart(productId) {
     dispatch(removeFrmCart(productId));
+  }
+
+  // handleCreateBooking
+  function handleCreateBooking() {
+    if (!currUser) {
+      alert("please login!");
+      return;
+    }
+
+    cartItems.map((item) => {
+      console.log(item);
+      const {
+        productId,
+        productImg,
+        productName,
+        productPrice,
+        selectedEndDate,
+        selectedStartDate,
+        selectedQuantity,
+      } = item;
+
+      dispatch(
+        createBooking({
+          productId,
+          productImg,
+          productName,
+          productPrice,
+          userId: currUser?.userId,
+          startDate: selectedStartDate,
+          endDate: selectedEndDate,
+          quantity: selectedQuantity,
+        })
+      );
+    });
   }
 
   if (cartItems.length < 1) {
@@ -111,7 +147,10 @@ function Cart() {
         </div>
 
         <div className="mt-3 w-full text">
-          <button className="border w-[100%] rounded-md py-1">
+          <button
+            className="border w-[100%] rounded-md py-1"
+            onClick={handleCreateBooking}
+          >
             confirm and proceed
           </button>
         </div>

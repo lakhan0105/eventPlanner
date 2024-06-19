@@ -9,6 +9,7 @@ function NavLinks() {
       <NavLink to={"/"}>About</NavLink>
       <NavLink to={"/all-products"}>All Products</NavLink>
       <NavLink to={"/cart"}>Cart</NavLink>
+      <NavLink to={"/my-orders"}>My Orders</NavLink>
     </Wrapper>
   );
 }

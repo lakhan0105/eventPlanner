@@ -12,6 +12,7 @@ import {
   Home,
   Lightings,
   Login,
+  MyOrders,
   Register,
   RootLayout,
   SingleProduct,
@@ -29,8 +30,9 @@ const router = createBrowserRouter(
         <Route path="tent-house" element={<TentHouse />} />
         <Route path="lightings" element={<Lightings />} />
         <Route path="all-products" element={<AllProducts />} />
-        <Route path="/single-product/:id" element={<SingleProduct />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="single-product/:id" element={<SingleProduct />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="my-orders" element={<MyOrders />} />
       </Route>
 
       <Route path="/login" element={<Login />} />

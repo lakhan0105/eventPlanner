@@ -5,9 +5,9 @@ import { addToLS, getLS, removeLS } from "../../utilities/localStorage";
 const initialState = {
   isLoading: false,
   cartItems: getLS("cartItems") || [],
-  cartTotal: 0,
-  tax: 0,
-  orderTotal: 0,
+  cartTotal: getLS("cartTotal") || 0,
+  tax: getLS("tax") || 0,
+  orderTotal: getLS("orderTotal") || 0,
   shipping: 500,
 };
 
@@ -48,16 +48,22 @@ const cartSlice = createSlice({
           findProduct.productPrice *
           (payload.selectedQuantity - findProduct.selectedQuantity);
         state.tax = 0.1 * state.cartTotal;
-        state.orderTotal = state.orderTotal + state.tax + state.shipping;
+        state.orderTotal = state.cartTotal + state.tax + state.shipping;
         addToLS("cartItems", state.cartItems);
+        addToLS("tax", state.tax);
+        addToLS("cartTotal", state.cartTotal);
+        addToLS("orderTotal", state.orderTotal);
       }
       // otherwise just add the item
       else {
         state.cartItems.push(payload);
         state.cartTotal += payload.selectedQuantity * payload.productPrice;
         state.tax = 0.2 * state.cartTotal;
-        state.orderTotal = state.orderTotal + state.tax + state.shipping;
+        state.orderTotal = state.cartTotal + state.tax + state.shipping;
         addToLS("cartItems", state.cartItems);
+        addToLS("tax", state.tax);
+        addToLS("cartTotal", state.cartTotal);
+        addToLS("orderTotal", state.orderTotal);
       }
     },
     removeFrmCart: (state, { payload }) => {
@@ -79,8 +85,12 @@ const cartSlice = createSlice({
         state.cartItems = editedCartItems;
         state.cartTotal -=
           findProduct.productPrice * findProduct.selectedQuantity;
+        state.tax = 0.2 * state.cartTotal;
+        state.orderTotal = state.cartTotal + state.tax + state.shipping;
         addToLS("cartItems", editedCartItems);
-        state.orderTotal += state.tax * state.cartTotal;
+        addToLS("tax", state.tax);
+        addToLS("cartTotal", state.cartTotal);
+        addToLS("orderTotal", state.orderTotal);
       }
     },
     clearCart: (state) => {
