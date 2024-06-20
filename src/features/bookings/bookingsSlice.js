@@ -12,7 +12,9 @@ const databases = new Databases(client);
 const initialState = {
   isLoading: false,
   isAvailable: null,
-  userBookings: null,
+  userBookings: [],
+  bookingsByDate: {},
+  // allBookingByDate: {},
 };
 
 // checkAvl
@@ -98,6 +100,20 @@ export const getBookingsByUser = createAsyncThunk(
 export const bookingsSlice = createSlice({
   name: "bookingsSlice",
   initialState,
+  reducers: {
+    getBookingsByDate: (state) => {
+      const resp = state.userBookings.reduce((acc, currOrder) => {
+        const startDate = currOrder.startDate;
+        if (!acc[startDate]) {
+          acc[startDate] = [];
+        }
+        acc[startDate].push(currOrder);
+        return acc;
+      }, {});
+
+      state.bookingsByDate = resp;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(checkAvl.pending, (state) => {
@@ -129,7 +145,6 @@ export const bookingsSlice = createSlice({
       .addCase(getBookingsByUser.fulfilled, (state, { payload }) => {
         const { documents } = payload;
         state.isLoading = false;
-        console.log(payload);
         state.userBookings = documents;
       })
       .addCase(getBookingsByUser.rejected, (state, { payload }) => {
@@ -140,3 +155,4 @@ export const bookingsSlice = createSlice({
 });
 
 export default bookingsSlice.reducer;
+export const { getBookingsByDate } = bookingsSlice.actions;

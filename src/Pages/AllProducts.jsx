@@ -10,8 +10,13 @@ import { FilterComponent, FilterSection } from "../Components/index";
 
 function AllProducts() {
   const dispatch = useDispatch();
-  const { allProducts, filteredProducts, filteredProductsByPrice, maxPrice } =
-    useSelector((state) => state?.productsReducer);
+  const {
+    allProducts,
+    isLoading,
+    filteredProducts,
+    filteredProductsByPrice,
+    maxPrice,
+  } = useSelector((state) => state?.productsReducer);
 
   const [products, setProducts] = useState(allProducts);
   const [rangeVal, setRangeVal] = useState(maxPrice || "");
@@ -57,6 +62,10 @@ function AllProducts() {
     const value = e.target.value;
     setRangeVal(value); // when range is changed by user change the rangeVal state
     dispatch(genFilteredProductsByPrice(Number(value))); // call the filter func
+  }
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
   }
 
   return (
